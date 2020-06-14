@@ -1,3 +1,111 @@
+<style type='text/css'>
+/*
+ * jQuery FlexSlider v2.2.022
+ * http://www.woothemes.com/flexslider/
+ *
+ * Copyright 2012 WooThemes
+ * Free to use under the GPLv2 license.
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * Contributing author: Tyler Smith (@mbmufffin)
+ */
+
+
+/* Browser Resets
+*********************************/
+img.wp-smiley,          img.emoji {             display: inline!important;              border: none!important;             box-shadow: none!important;             height: 1em!important;              width: 1em!important;               margin: 0 .07em!important;              vertical-align: -0.1em!important;               background: none!important;             padding: 0!important            }       
+
+.flex-container a:active,
+.flexslider a:active,
+.flex-container a:focus,
+.flexslider a:focus  {outline: none;}
+.slides,
+.flex-control-nav,
+.flex-direction-nav {margin: 0; padding: 0; list-style: none;}
+
+/* Icon Fonts
+*********************************/
+/* Font-face Icons */
+@font-face {
+    font-family: &#39;flexslider-icon&#39;;
+    src:url(&#39;fonts/flexslider-icon.eot&#39;);
+    src:url(&#39;fonts/flexslider-icon.eot?#iefix&#39;) format(&#39;embedded-opentype&#39;),
+        url(&#39;fonts/flexslider-icon.woff&#39;) format(&#39;woff&#39;),
+        url(&#39;fonts/flexslider-icon.ttf&#39;) format(&#39;truetype&#39;),
+        url(&#39;fonts/flexslider-icon.svg#flexslider-icon&#39;) format(&#39;svg&#39;);
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* FlexSlider Necessary Styles
+*********************************/
+.flexslider {margin: 0; padding: 0;}
+.flexslider .slides &gt; li {display: none; -webkit-backface-visibility: hidden;} /* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides img {width: 100%; display: block;}
+.flex-pauseplay span {text-transform: capitalize;}
+
+/* Clearfix for the .slides element */
+.slides:after {content: &quot;\0020&quot;; display: block; clear: both; visibility: hidden; line-height: 0; height: 0;}
+html[xmlns] .slides {display: block;}
+* html .slides {height: 1%;}
+
+/* No JavaScript Fallback */
+/* If you are not using another script, such as Modernizr, make sure you
+ * include js that eliminates this class on page load */
+.no-js .slides &gt; li:first-child {display: block;}
+
+/* FlexSlider Default Theme
+*********************************/
+.flexslider { margin: 0 0 40px 0; position: relative; zoom: 1; }
+.flex-viewport { max-height: 2000px; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease; }
+.loading .flex-viewport { max-height: 300px; }
+.flexslider .slides { zoom: 1; }
+.carousel li { margin-right: 5px; }
+
+/* Direction Nav */
+.flex-direction-nav {*height: 0;}
+.flex-direction-nav a {width: 33px; height: 41px; margin: -20px 0 0; display: block; background: url(http://2.bp.blogspot.com/-uxRBv_6ctCg/VAC8blS2qzI/AAAAAAAAD7U/z0_dCwGhKi4/s1600/slider-nav.png) no-repeat 0 0; position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; opacity: 1; -webkit-transition: all .3s ease;}
+.flex-direction-nav .flex-next {background-position: 100% 0; right: 15px; }
+.flex-direction-nav .flex-prev {left: 15px;}
+.flexslider:hover .flex-next {opacity: 1; right: 15px;}
+.flexslider:hover .flex-prev {opacity: 1; left: 15px;}
+.flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover {opacity: 1;}
+.flex-direction-nav .flex-disabled {opacity: .3!important; filter:alpha(opacity=30); cursor: default;}
+
+/* Pause/Play */
+.flex-pauseplay a { display: block; width: 20px; height: 20px; position: absolute; bottom: 5px; left: 10px; opacity: 0.8; z-index: 10; overflow: hidden; cursor: pointer; color: #000; }
+.flex-pauseplay a:before  { font-family: &quot;flexslider-icon&quot;; font-size: 20px; display: inline-block; content: &#39;\f004&#39;; }
+.flex-pauseplay a:hover  { opacity: 1; }
+.flex-pauseplay a.flex-play:before { content: &#39;\f003&#39;; }
+
+/* Control Nav */
+.flex-control-nav {width: 100%; position: absolute; bottom: -40px; text-align: center;}
+.flex-control-nav li {margin: 0 6px; display: inline-block; zoom: 1; *display: inline;}
+.flex-control-paging li a {width: 11px; height: 11px; display: block; background: #666; background: rgba(0,0,0,0.5); cursor: pointer; text-indent: -9999px; -webkit-border-radius: 20px; -moz-border-radius: 20px; -o-border-radius: 20px; border-radius: 20px; -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -moz-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); -o-box-shadow: inset 0 0 3px rgba(0,0,0,0.3); box-shadow: inset 0 0 3px rgba(0,0,0,0.3); }
+.flex-control-paging li a:hover { background: #333; background: rgba(0,0,0,0.7); }
+.flex-control-paging li a.flex-active { background: #000; background: rgba(0,0,0,0.9); cursor: default; }
+
+.flex-control-thumbs {margin: 5px 0 0; position: static; overflow: hidden;}
+.flex-control-thumbs li {width: 25%; float: left; margin: 0;}
+.flex-control-thumbs img {width: 100%; display: block; opacity: .7; cursor: pointer;}
+.flex-control-thumbs img:hover {opacity: 1;}
+.flex-control-thumbs .flex-active {opacity: 1; cursor: default;}
+
+@media screen and (max-width: 860px) {
+  .flex-direction-nav .flex-prev { opacity: 1; left: 10px;}
+  .flex-direction-nav .flex-next { opacity: 1; right: 10px;}
+}
+    </style>
+
+
+   <b:skin><![CDATA[
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:        Sinensis
+Author :     http://www.criaremail.net
+License:     Free Version
+----------------------------------------------- */
 
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
 /* HTML5 display-role reset for older browsers */
@@ -1733,3 +1841,242 @@ padding: 8px 7px;
 font-size: 10px;
 border-top: 1px dotted rgba(0,0,0,0.2);
 }
+
+
+]]></b:skin>
+
+
+    
+<b:if cond='data:blog.pageType == &quot;item&quot;'>
+<style type='text/css'>
+.entry-content{padding:0 10px} 
+.post{margin-bottom:0;padding-bottom:0;border-top:none}
+</style>
+</b:if>
+<b:if cond='data:blog.pageType != &quot;item&quot;'>
+<style type='text/css'>
+
+</style>
+</b:if>
+<b:if cond='data:blog.pageType == &quot;static_page&quot;'>
+<style>
+.main-wrapper{width:auto;margin:0}
+.sidebar-wrapper{display:none}
+.post-title:before,.post-title{display:none;padding:0 0 .2em}
+.post.hentry {
+background: #FFF;
+width: auto;
+padding: 30px;
+}
+  </style>
+
+
+</b:if>
+
+<b:if cond='data:blog.url != data:blog.homepageUrl'>
+<!--[if !IE]><!-->
+<style type='text/css'>
+
+
+</style>
+ <!--<![endif]-->
+</b:if>
+<style id='advertisement'>
+.ad-banner{position:relative;display:block;max-width:1200px;text-align:center;margin:-1% auto 2%}
+</style>
+<style>
+@media screen and (max-width:1260px){
+.item-label{top:200px}
+
+}
+@media screen and (max-width:1200px){
+.item-label{top:180px}
+
+}
+
+@media screen and (max-width:1152px){
+.main-wrapper{width:660px}
+
+
+#navigation.pick &gt; div &gt; ul &gt; li {margin-left: 15px;}
+#content{margin-right: 0em;}
+
+
+h1.post-title{font-size:45px}
+
+.item-label {
+width: 39%;
+}
+}
+
+@media screen and (max-width: 1060px){
+
+.container1 {
+width: 994px;
+margin: 0 auto;
+text-align: center;
+float: center;
+}
+
+img.thumb {
+width: 300px;
+}
+.wrap-ct {
+width: 100%;
+      max-width: 1005px;}
+}
+
+@media screen and (max-width:960px) {
+
+.navigation {
+display: none;
+}
+.entry-container{width:56.5%}
+
+.container1 {
+      width: 730px;}
+
+div#featured-posts-section {
+margin-bottom: -7px;
+display: none;
+}
+.jump,#footer {display: block!important;}
+.toggle-button{display:none}
+
+#menu-main li a {
+padding: 21px 10px;
+}
+
+#navigation.pick &gt; div &gt; ul &gt; li {
+margin-left: 0px;
+}
+.small-posts {
+width: 170px;
+float: left;
+margin-right: 15px;
+}
+.small-posts .post-thumb {
+width: 170px;
+height: 130px;
+overflow: hidden;
+}
+#category-one {
+width: 550px;   
+float: left;
+margin-left: 20px;
+}
+
+#large-post {
+width: 340px;}
+.middle-text{width:260px}
+#category-two {
+width: 186px;}
+
+
+.header-inner-wrap{width:100%;height:auto;}
+.single-wrapper .post-body img {max-width: 90%;height: auto;}
+
+.footer-menu ul{display:block;text-align:center}
+
+.footer-credits .ct-wrapper{padding:0 10px}
+
+.sidebar-wrapper{float:none;width:auto;max-width:100%;clear:both}
+
+#content{margin-right:0}
+.share-story-container ul li{text-align:center;display:inline-block;margin:20px 10px 0}
+.post-body.entry-content{padding-bottom:3%}
+.main-wrapper { 
+width: auto;
+}
+
+.wrap-ct {
+width: 100%;
+max-width: 762px;
+}
+
+#search-button{display:none!important}
+}
+
+@media screen and (max-width:760px){
+.main-wrapper {
+width: auto;
+}
+div#featured-posts-section {
+margin-bottom: -7px;
+display: none;
+}
+
+div#top-posts {
+display: none;
+}
+
+.container1 {
+width: 450px;
+}
+
+.entry-container {
+width: 45.5%;
+}
+img.thumb {
+float: left;
+line-height: 0;
+margin-left: 20px;
+width: 210px;
+}
+#content {
+margin-right: 0;
+width: auto;
+}
+.post-body{font-size:14px;font-family:trebuchet ms}
+.item-label {
+width: 49%;
+}
+}
+
+@media screen and (max-width:480px){
+img.thumb {
+float: left;
+line-height: 0;
+margin-right: 20px;
+margin-left: 0px;
+width: 290px;
+}
+
+.entry-container {
+width: 100%;
+margin-top: 10px;
+}
+.entry-container {
+width: 100%;
+margin-top: 10px;
+}
+
+.item-label {
+width: 100%;
+}
+
+.container1 {
+width: 300px;
+}
+
+#content {
+margin-right: 0;
+width: 300px;
+}
+
+.wrap-ct {
+width: 100%;
+max-width: 300px;
+}
+}
+
+.post.hentry:first-child {
+border-top: none;
+padding: 0px;
+}
+
+</style>
+
+
+
+<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'/>
